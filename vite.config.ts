@@ -5,7 +5,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [
-    // Required plugins
     react(),
     tailwindcss(),
   ],
@@ -16,15 +15,21 @@ export default defineConfig({
     },
   },
 
-  // ✅ REQUIRED for Render deployment
+  // Dev server (local)
   server: {
-    host: true,                    // binds to 0.0.0.0
-    port: process.env.PORT || 5173 // uses Render's port
+    host: true,
+    port: process.env.PORT || 5173,
+    allowedHosts: true
   },
 
-  // ✅ Needed for preview mode on Render
+  // ✅ REQUIRED for Render preview
   preview: {
     host: true,
-    port: process.env.PORT || 4173
+    port: process.env.PORT || 4173,
+
+    // 🔥 THIS FIXES YOUR ERROR
+    allowedHosts: [
+      '.onrender.com' // allow all Render subdomains
+    ]
   }
 })
