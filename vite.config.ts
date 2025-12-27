@@ -5,15 +5,26 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [
-    // The React and Tailwind plugins are both required for Make, even if
-    // Tailwind is not being actively used – do not remove them
+    // Required plugins
     react(),
     tailwindcss(),
   ],
+
   resolve: {
     alias: {
-      // Alias @ to the src directory
       '@': path.resolve(__dirname, './src'),
     },
   },
+
+  // ✅ REQUIRED for Render deployment
+  server: {
+    host: true,                    // binds to 0.0.0.0
+    port: process.env.PORT || 5173 // uses Render's port
+  },
+
+  // ✅ Needed for preview mode on Render
+  preview: {
+    host: true,
+    port: process.env.PORT || 4173
+  }
 })
